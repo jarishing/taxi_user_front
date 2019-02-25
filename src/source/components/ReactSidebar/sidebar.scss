@@ -1,0 +1,36 @@
+.sidebar-container {
+    width: 230px;
+    background-color: #f0f0f0;;
+    height: 100%;
+    position: relative;
+}
+
+.sidebar-down {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    &> li > a {
+        background-color: white;
+        padding: 10 20px;
+        display: block;
+        text-decoration: none;
+        color: grey;
+        font-size: 12px;
+
+        &> i {
+            width: 20px;
+            text-emphasis: center;;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+
+    }
+}

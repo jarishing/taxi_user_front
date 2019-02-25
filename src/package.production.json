@@ -1,0 +1,17 @@
+{
+  "name": "react-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "fire-proxy": "^1.0.10",
+    "into-stream": "^4.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "ken.yip",
+  "license": "ISC"
+}

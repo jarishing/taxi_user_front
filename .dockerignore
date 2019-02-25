@@ -1,0 +1,14 @@
+public/*
+*/node_modules*
+*/.git
+*/.gitignore
+.gitkeep
+
+config
+public
+scripts
+source
+backup
+.eslintrc.js
+package-lock.json
+pm2.json
