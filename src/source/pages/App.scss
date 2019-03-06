@@ -199,6 +199,7 @@
 
 .record-container {
     height: calc( 100% - 50px);
+    overflow-y: scroll;
 }
 
 .order-card {
@@ -218,6 +219,39 @@
         &> i {
             margin-right: 12px;
             color: lightgrey;
+        }
+    }
+
+    &> .order-card-status-list{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: 10px;
+
+        &> .order-card-status{
+            padding: 6px 10px;
+            border: 1px solid;
+            border-radius: 2px;
+        }
+
+        &> .order-card-accepted{
+            border-color: green;
+            color: green;
+        }
+
+        &> .order-card-confirmed{
+            border-color: steelblue;
+            color: steelblue;
+        }
+
+        &> .order-card-canceled{
+            border-color: crimson;
+            color: crimson;
+        }
+
+        &> .order-card-commented{
+            border-color: cadetblue;
+            color: cadetblue;
         }
     }
 }

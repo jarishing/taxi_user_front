@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3100;
@@ -13,7 +13,7 @@ app.use('/api', proxy({
     target: `${process.env.BACKEND|| 'http://localhost:3100' }/api`
 }));
 
-
+ 
 app.use(express.static(path.resolve( __dirname, 'www')));  
 
 /**

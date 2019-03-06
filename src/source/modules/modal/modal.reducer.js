@@ -11,6 +11,7 @@ const actionHandlers = {
     SET_MODAL_SHOW: ( state, action ) => {
         const result = { ... state };
         result.show = action.payload.show;
+        console.log(result);
         return result;
     },
     SET_MODAL_TAG: ( state, action ) => {

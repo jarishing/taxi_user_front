@@ -1,0 +1,90 @@
+.modal-view{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+
+    &> .modal-background{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 500;
+        background-color: #000;
+        opacity: 0.2;
+    }
+
+    &> .modal-wrapper{
+        width: 100%;
+        top: 10vh;
+        margin: 0 5vw;
+        padding:2vh;
+        background-color: white;
+        z-index: 510;
+        max-height: 86vh;
+
+        &> .modal-comment-header{
+            display: flex;
+            justify-content: space-between;
+            padding: 2vh 0;
+            border-bottom: 1px solid lightgray;
+
+            &> .modal-comment-title{
+                font-size: 3vh;
+                font-weight: 500;
+            }
+
+            &> .modal-comment-header-button{
+                font-size: 3vh;
+                justify-content: flex-end;
+                align-items: center;
+                display: flex;
+                width: 15vw;
+                height: 4vh;
+                padding-right: 2vw;
+            }
+        }
+
+        &> .modal-comment-body{
+            border-bottom: 1px solid lightgray;
+            max-height: 66vh;
+            overflow-y: scroll;
+        }
+
+        &> .modal-comment-footer{
+            padding-top: 2vh;
+            display: flex;
+            justify-content: flex-end;
+
+            &> .modal-comment-footer-button{
+                width: 20vw;
+                height: 6vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 7vw;
+            }
+
+            &> .button-close{
+                border: 1px solid gray;
+                color: gray;
+            }
+
+            &> .button-reuse{
+                color: white;
+                background-color: crimson;
+            }
+
+            &> .button-comment{
+                background-color: steelblue;
+                color: white;
+            }
+
+            &> .button-detail{
+                background-color: seagreen;
+                color: white;
+            }
+        }
+    }
+}

@@ -98,4 +98,16 @@ Order.getCommentOrder = async function(){
     return response.data.data;
 };
 
+Order.getAllOrder = async function(){
+
+    const access_token = store.getState().base.accessToken;
+
+    const response = await axios.get(url+'/api/order', { 
+        params: { status: 'all' },
+        headers: { Authorization: 'Bearer ' + access_token }
+    });
+
+    return response.data.data;
+};
+
 export default Order;

@@ -14,6 +14,7 @@ import Socket from '../socket';
 import moment from 'moment';
 import * as auth from '../auth';
 import { action } from '../modules';
+import Modal from '../components/modal/modal';
 
 const mapStateToProp = state => ({
     location: state.base.location,
@@ -52,7 +53,11 @@ export default class extends React.Component {
             order: null,
             orderDoc: null,
             cost: null,
-            history: []
+            history: [],
+
+
+            modal: false,
+            modalData: null
         };
     }
     
@@ -67,13 +72,14 @@ export default class extends React.Component {
     }
 
     getRecord = async () => {
-        const history = await api.order.getCommentOrder();
+        // const history = await api.order.getCommentOrder();
+        const history = await api.order.getAllOrder();
         this.setState({ history: history });
     }
 
     createOrder = async () => {
         const reqBody = { ... this.state.reqBody };
-            
+
         reqBody.origin = reqBody.origin.location;
         reqBody.route = reqBody.route? reqBody.route.location: void 0;
         reqBody.destination = reqBody.destination.location;
@@ -241,7 +247,7 @@ export default class extends React.Component {
             <React.Fragment>
                 <div className="App__body">
                     <div className="App__Form">
-                        <p className="alert">
+                        <p className="alert" onClick={() => console.log(this.state)}>
                             <i className="wb-bell"/> 現時交通情方比較繁忙! 減少折扣可較客易找到的士!
                         </p>
                         <div 
@@ -324,7 +330,7 @@ export default class extends React.Component {
                                     { name: '任行', value: 'any' },
                                     { name: '東隧', value: 'eastTunnel' },
                                     { name: '西隧', value: 'westTunnel' },
-                                    { name: '紅隧', value: 'HungHomTunnel' }
+                                    { name: '紅隧', value: 'hungHomTunnel' }
                                 ].map( (item, index) => (
                                     <button 
                                         type="button" 
@@ -604,7 +610,6 @@ export default class extends React.Component {
     }
 
     renderOrderAccepted = props => {
-
         const { acceptBy } = this.state.orderDoc;
 
         return (
@@ -670,14 +675,77 @@ export default class extends React.Component {
         // "你只能取消五分鍾前的落單",
     }
 
+    setModal = ( orderId ) => {
+        // console.log("hello");
+        this.setState({ modal: !this.state.modal, modalData: orderId });
+    }
+
+    backToOrderPage = async ( orderId ) => {
+        const order = await api.order(orderId);
+        const orderDoc = await order.get();
+        const user = await api.user.getUser(orderDoc.acceptBy._id);
+        orderDoc.acceptBy.location = user.position;
+        this.setState({ order: order, orderDoc: orderDoc, page: "接受訂單" });
+    }
+
+    setReOrder = ( order ) => {
+        this.setState({ 
+            page: '打的 DADI',
+            reqBody: {
+                origin: {
+                    address: order.start.address,
+                    location:{
+                        lat: order.start.lat,
+                        lng: order.start.lng
+                    }
+                },
+                destination: {
+                    address: order.end.address,
+                    location:{
+                        lat: order.end.lat,
+                        lng: order.end.lng
+                    }
+                },
+                route: order.route? 
+                    {
+                        address: order.route.address,
+                        location:{
+                            lat: order.route.lat,
+                            lng: order.route.lng
+                        }
+                    }:null
+                ,
+                criteria: {
+                    taxiType: order.criteria.taxiType, 
+                    discount: order.criteria.discount,
+                    tunnel: order.criteria.tunnel,
+                    passenger: order.criteria.passenger,
+                    payment: order.criteria.payment
+                }
+            }
+        });
+    }
+    
     renderOrderRecord = props => {
         return (
             <div className="record-container">
                 {
+                    this.state.modal && 
+                    <Modal 
+                        setModal = { this.setModal }
+                        reOrder = { this.setReOrder }
+                        detailOrder = { this.backToOrderPage }
+                        orderId = { this.state.modalData }
+                    />
+                }
+                {
                     this.state.history.map( history => (
                         <div 
                             key={history._id}
-                            onClick={() => this.props.open(history._id, history)}
+                            onClick={() =>
+                                this.setModal(history._id)
+                                // () => this.props.open(history._id, history)
+                            }
                         >
                             <div className="order-card">
                                 <p className="location"> 
@@ -686,6 +754,30 @@ export default class extends React.Component {
                                 <p className="time">
                                     <i className="icon-circles"/> {moment(history.createdAt).locale('zh-HK').format('Do MMM YYYY hh:mm a')}
                                 </p>
+                                <div className="order-card-status-list">
+                                    <div className="order-card-status-no">
+                                        定單編號: {history.orderId}
+                                    </div>
+                                    <div 
+                                        className={
+                                            history.status == "accepted"?
+                                                "order-card-status order-card-accepted":
+                                            history.status == "confirmed"?
+                                                "order-card-status order-card-confirmed":
+                                            history.status == "canceled"?
+                                                "order-card-status order-card-canceled":"order-card-status order-card-commented"
+                                        }
+                                    >
+                                        {  
+                                            history.status == "accepted"?
+                                                "已承接":
+                                            history.status == "confirmed"?
+                                                "已完成":
+                                            history.status == "canceled"?
+                                                "已取消":"已評價"
+                                        }
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     ))

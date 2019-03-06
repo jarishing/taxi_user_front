@@ -2,6 +2,6 @@
 
 // const url = "http://localhost:3100"
 
-const url = "https://admin.hkairportqualitytaxi.com";
+const url = "http://admin.hkairportqualitytaxi.com";
 
 export default url;
