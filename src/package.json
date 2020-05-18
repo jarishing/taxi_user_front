@@ -27,7 +27,7 @@
     "css-loader": "^2.1.0",
     "express": "^4.16.4",
     "into-stream": "^4.0.0",
-    "jquery": "^3.2.1",
+    "jquery": "^3.5.0",
     "ken.yip": "^1.1.2",
     "lodash.topath": "^4.5.2",
     "moment": "^2.22.2",
