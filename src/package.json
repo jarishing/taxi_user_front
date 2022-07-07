@@ -30,7 +30,7 @@
     "jquery": "^3.2.1",
     "ken.yip": "^1.1.2",
     "lodash.topath": "^4.5.2",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "node-sass": "^4.11.0",
     "object-path": "^0.11.4",
     "path": "^0.12.7",
